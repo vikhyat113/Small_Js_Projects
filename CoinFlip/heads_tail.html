@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Heads tail</title>
+    <style>
+        body{
+            background-color: blanchedalmond;
+        }
+    </style>
+</head>
+<body>
+    <p style="font-weight: bold; ">The Deciding coins</p>
+ <button onclick="
+        game('head');">
+        Heads
+    </button>
+   <button onclick="
+   game('tails');">
+    tails
+   </button>
+   <P class="js-result"></P>
+   <p class="js-move"></p>
+   <p class="js-score"></p>
+   <button onclick="
+           score.win=0;
+           score.loss=0;
+           localStorage.removeItem('score');
+            scoreupdate();"> 
+    Reset
+   </button>
+
+       <script>
+       
+       
+      
+       let score = JSON.parse(localStorage.getItem('score')) || {
+            win :0,
+            loss:0,
+        }
+      scoreupdate();
+        function comppick(){
+            let number = Math.random();
+            let move="";
+            if ( number >=0 && number < 1/2){
+                move = 'Heads'
+            }
+            else
+            move= 'tails';
+        return move;
+        }
+           
+        function game(choice){
+               let compmove= comppick();
+              let result='';
+            if(choice =='head'){
+                if(compmove== 'Heads')
+            result = 'YOU WIN';
+            
+            else 
+            result= "YOU LOSE";}
+          else{
+         if(compmove== 'tails')
+            result = 'YOU WIN';
+            else 
+            result= "YOU LOSE";}
+             
+            if(result == 'YOU WIN'){
+                score.win++;}
+                else
+                score.loss++;
+            scoreupdate();
+              
+            localStorage.setItem('score',JSON.stringify(score));
+
+
+                        document.querySelector('.js-result').innerHTML=result;
+                        document.querySelector('.js-move').innerHTML= `You picked ${choice} and coin landed on ${compmove}`
+                                  
+                }
+                     scoreupdate();
+               function scoreupdate(){
+                document.querySelector('.js-score').innerHTML=`Wins: ${score.win}, Losses: ${score.loss}`;
+               }
+
+
+
+     
+
+      </script>
+</body>
+</html>
